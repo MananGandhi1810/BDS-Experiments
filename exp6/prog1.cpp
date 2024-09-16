@@ -1,4 +1,4 @@
-// Linear Queue
+// Circular Queue
 #include <iostream>
 using namespace std;
 
@@ -57,44 +57,75 @@ int main()
 
 void enqueue(int value)
 {
-  if (rear >= n - 1)
+  if ((front == 0 && rear == n - 1) || (rear == (front - 1) % (n - 1)))
   {
     cout << "Overflow" << endl;
     return;
   }
-  if (rear == -1 && front == -1)
+  if (front == -1)
   {
     front = 0;
+    rear = 0;
   }
-  rear++;
+  else if (rear == n - 1 && front != 0)
+  {
+    rear = 0;
+  }
+  else
+  {
+    rear++;
+  }
   queue[rear].value = value;
 }
 
 void dequeue()
 {
-  if (front - rear < 0 || (front == -1 && rear == -1))
+  if (front == -1)
   {
     cout << "Underflow" << endl;
     return;
   }
-  if (rear == 0 && front == 0)
+  int value = queue[front].value;
+  if (front == rear)
   {
     front = -1;
+    rear = -1;
   }
-  cout << "Value deleted: " << queue[rear].value << endl;
-  rear--;
+  else if (front == n - 1)
+  {
+    front = 0;
+  }
+  else
+  {
+    front++;
+  }
+  cout << "Deleted value: " << value << endl;
 }
 
 void display()
 {
-  if (front - rear < 0 || (front == -1 && rear == -1))
+  if (front == -1 && rear == -1)
   {
     cout << "Empty" << endl;
     return;
   }
-  for (int i = front; i <= rear; i++)
+  if (front <= rear)
   {
-    cout << queue[i].value << "\t";
+    for (int i = front; i <= rear; i++)
+    {
+      cout << queue[i].value << "\t";
+    }
+  }
+  else
+  {
+    for (int i = front; i < n; i++)
+    {
+      cout << queue[i].value << "\t";
+    }
+    for (int i = 0; i <= rear; i++)
+    {
+      cout << queue[i].value << "\t";
+    }
   }
   cout << endl;
 }
