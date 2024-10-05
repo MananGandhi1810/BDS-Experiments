@@ -1,2 +1,26 @@
-// The elements of an array are given as: [4, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 58, 65, 80, 98], target = 20, 98
-// Answer - 2, 4 iterations
+// Insertion sort
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int n = 5;
+    int arr[5] = {5, 4, 3, 2, 1};
+    for (int i = 0; i < n; i++)
+    {
+        int j = i - 1, key = arr[i];
+        while (j >= 0 && arr[j] > key)
+        {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+    cout << "Result: ";
+    for (int i = 0; i < n; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+    return 0;
+}
